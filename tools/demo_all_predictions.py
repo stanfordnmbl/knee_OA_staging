@@ -17,6 +17,8 @@ import scipy.io as sio
 import caffe, os, sys, cv2
 import argparse
 
+import sklearn
+print sklearn.__version__
 from sklearn import model_selection
 import pickle
 
@@ -185,10 +187,12 @@ if __name__ == '__main__':
 
     if args.cpu_mode:
         caffe.set_mode_cpu()
+        print "CPU!!!"
     else:
         caffe.set_mode_gpu()
         caffe.set_device(args.gpu_id)
         cfg.GPU_ID = args.gpu_id
+        print "GPU!!!"
     net = caffe.Net(prototxt, caffemodel, caffe.TEST)
 
     print '\n\nLoaded network {:s}'.format(caffemodel)
@@ -197,6 +201,7 @@ if __name__ == '__main__':
     for file in os.listdir('data/test_images'):
         if file.endswith('.jpg'):
             im_names.append(file)
+        print(file)
     
     im_names = sorted(im_names)
     
